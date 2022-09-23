@@ -1,4 +1,4 @@
-
+from pathlib import Path
 import pytest
 from boto3 import resource
 from moto.s3 import mock_s3
@@ -6,8 +6,8 @@ from moto.s3 import mock_s3
 
 BUCKET_NAME = 'MY_BUCKET_NAME'
 FILE_NAME = 'file_name.csv'
-FILE_PATH = 's3_storage'
-DOWNLOAD_PATH = 's3_downloads'
+FILE_PATH = Path('s3_storage')
+DOWNLOAD_PATH = Path('s3_downloads')
 
 
 @pytest.fixture

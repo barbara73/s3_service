@@ -65,13 +65,3 @@ class S3Storage:
 def get_file_names(file_path):
     """Get file names of directory."""
     return [f for f in listdir(file_path) if isfile(join(file_path, f))]
-
-
-
-# zip_bytes_io = io.BytesIO()
-# zip_archive = zipfile.ZipFile(zip_bytes_io, mode='a',
-#                               compression=zipfile.ZIP_DEFLATED)
-# zip_archive.writestr('test.txt', b'My string')
-# s3_client = boto3.client('s3')
-# zip_bytes_io.seek(0)  # So that bytes are read from beginning
-# s3_client.upload_fileobj(zip_bytes_io, test_bucket, 'test.zip')

@@ -1,7 +1,7 @@
 import boto3
 from moto import mock_s3
 
-from src.s3interactions.s3_interactions import create_new_bucket, delete_all, list_buckets
+from src.s3interactions.s3_interactions import delete_all, list_buckets
 from src.s3interactions.s3_interactions import list_bucket_objects, delete_bucket_objects
 from src.s3interactions.s3_interactions import create_bucket_name, copying_between_buckets
 from tests.conftest import BUCKET_NAME
@@ -12,13 +12,6 @@ def test_create_bucket_name():
     assert create_bucket_name()[:12] == 'bkt-dfl-app-'
     assert create_bucket_name('abc')[:3] == 'abc'
     assert create_bucket_name(bucket_suffix='my_name') == 'bkt-dfl-app-my_name'
-
-
-# @mock_s3
-# def test_create_new_bucket():
-#     """Test creation of bucket."""
-#     conn = boto3.resource('s3', region_name='us-east-1')
-#     assert create_new_bucket(conn, BUCKET_NAME) == conn.Bucket(name=BUCKET_NAME)
 
 
 @mock_s3

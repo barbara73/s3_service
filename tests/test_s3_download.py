@@ -1,4 +1,5 @@
 import os
+import shutil
 from pathlib import Path
 from zipfile import ZipFile
 
@@ -23,7 +24,7 @@ def test_download_single_file():
 
     for filename in os.listdir(DOWNLOAD_PATH):
         assert filename == 'file_name.csv'
-        os.remove(os.path.join(DOWNLOAD_PATH, filename))
+        shutil.rmtree(DOWNLOAD_PATH)
 
 
 @mock_s3
@@ -37,7 +38,7 @@ def test_my_model_save():
     store = S3Storage(conn, BUCKET_NAME)
     store.upload_single_file(FILE_NAME, FILE_PATH)
     body = conn.Object(BUCKET_NAME, FILE_NAME).get()['Body'].read().decode("utf-8")
-    assert body == 'a,b,c,d'
+    assert body == '1,2,3,4'
 
 
 @mock_s3
@@ -50,6 +51,6 @@ def test_download_all_files_as_zip():
     downloader = S3Downloader(conn, BUCKET_NAME)
     downloader.download_all_files_as_zip()
     for filename in os.listdir(DOWNLOAD_PATH):
-        with ZipFile(f'{DOWNLOAD_PATH}/{filename}') as zf:
+        with ZipFile(Path(DOWNLOAD_PATH, filename)) as zf:
             assert zf.namelist() == ['file_name.csv', 'other_file.txt']
-
+    shutil.rmtree(DOWNLOAD_PATH)

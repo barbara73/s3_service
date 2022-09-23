@@ -1,5 +1,7 @@
 import os
+import shutil
 from io import BytesIO
+from pathlib import Path
 from zipfile import ZipFile
 import boto3
 from moto import mock_s3
@@ -28,11 +30,12 @@ def test_upload_from_zip():
     store = S3Storage(conn, BUCKET_NAME)
     store.upload_zip('zip_folder.zip')
     assert list_bucket_objects(conn, BUCKET_NAME) == ['zip_folder.zip']
+
     downloader = S3Downloader(conn, BUCKET_NAME)
-    downloader.download_all_files()
-    with ZipFile(f'{DOWNLOAD_PATH}/zip_folder.zip') as zf:
+    downloader.download_all_files(DOWNLOAD_PATH)
+    with ZipFile(Path(DOWNLOAD_PATH, 'zip_folder.zip')) as zf:
         assert zf.namelist() == [FILE_NAME, 'other_file.txt']
-    os.remove(os.path.join(DOWNLOAD_PATH, 'zip_folder.zip'))
+    shutil.rmtree(DOWNLOAD_PATH)
 
 
 @mock_s3
