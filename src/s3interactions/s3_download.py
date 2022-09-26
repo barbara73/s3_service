@@ -35,7 +35,7 @@ class S3Downloader:
             self.download_single_file(obj.key, f_path)
 
     @LogDecorator('INFO - download single file from bucket')
-    def download_single_file(self, f_name: str, f_path: str = 'src/files/s3_downloads') -> None:
+    def download_single_file(self, f_name: str, f_path: str = 'files/s3_downloads') -> None:
         """
         Download single file.
         """
@@ -46,7 +46,7 @@ class S3Downloader:
                        f_name).download_file(str(Path(f_path, f_name)))
 
     @LogDecorator('INFO - download files to zip')
-    def download_all_files_as_zip(self, f_path: str = 's3_downloads') -> None:
+    def download_all_files_as_zip(self, f_path: str = 'files/s3_downloads') -> None:
         """
         Download files to zip. Is much faster than
         """
