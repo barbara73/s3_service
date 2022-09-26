@@ -8,7 +8,7 @@ from moto import mock_s3
 
 from src.s3interactions.s3_download import S3Downloader
 from src.s3interactions.s3_storage import S3Storage
-from tests.conftest import BUCKET_NAME, FILE_NAME, FILE_PATH, DOWNLOAD_PATH, PATH_ROOT
+from tests.conftest import BUCKET_NAME, FILE_NAME, FILE_PATH, DOWNLOAD_PATH
 
 
 @mock_s3

@@ -17,8 +17,6 @@ from botocore.exceptions import ClientError
 from logdecoratorandhandler.log_decorator import LogDecorator
 from logdecoratorandhandler.log_handler import EXPORT_ID
 
-PATH_ROOT = Path(__file__).parents[0]
-
 
 @dataclass
 class S3Downloader:
@@ -37,7 +35,7 @@ class S3Downloader:
             self.download_single_file(obj.key, f_path)
 
     @LogDecorator('INFO - download single file from bucket')
-    def download_single_file(self, f_name: str, f_path: str = str(Path(PATH_ROOT, 'src/files/s3_downloads'))) -> None:
+    def download_single_file(self, f_name: str, f_path: str = 'src/files/s3_downloads') -> None:
         """
         Download single file.
         """
