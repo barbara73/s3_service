@@ -6,8 +6,9 @@ from moto.s3 import mock_s3
 
 BUCKET_NAME = 'MY_BUCKET_NAME'
 FILE_NAME = 'file_name.csv'
-FILE_PATH = Path('s3_storage')
-DOWNLOAD_PATH = Path('s3_downloads')
+PATH_ROOT = Path(__file__).parents[0]
+FILE_PATH = Path(PATH_ROOT, 's3_storage')
+DOWNLOAD_PATH = Path(PATH_ROOT, 's3_downloads')
 
 
 @pytest.fixture

@@ -14,8 +14,6 @@ import uuid
 from boto3 import resource
 from boto3.session import Session
 from logdecoratorandhandler.log_decorator import LogDecorator
-#
-# from config import get_s3_resource
 
 
 @LogDecorator('INFO - create bucket name')
