@@ -37,7 +37,7 @@ class S3Downloader:
             self.download_single_file(obj.key, f_path)
 
     @LogDecorator('INFO - download single file from bucket')
-    def download_single_file(self, f_name: str, f_path: str = str(Path(PATH_ROOT, 's3_downloads'))) -> None:
+    def download_single_file(self, f_name: str, f_path: str = str(Path(PATH_ROOT, 'src/files/s3_downloads'))) -> None:
         """
         Download single file.
         """

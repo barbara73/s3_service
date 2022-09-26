@@ -28,12 +28,12 @@ def test_upload_from_zip():
     conn = boto3.resource('s3', region_name='us-east-1')
     conn.create_bucket(Bucket=BUCKET_NAME)
     store = S3Storage(conn, BUCKET_NAME)
-    store.upload_zip(str(Path(PATH_ROOT, 'zip_folder.zip')))
+    store.upload_zip(str(Path(PATH_ROOT, '../src/files/zip_folder.zip')))
     assert str(list_bucket_objects(conn, BUCKET_NAME)).find('zip_folder.zip') > -1
 
     downloader = S3Downloader(conn, BUCKET_NAME)
     downloader.download_all_files(DOWNLOAD_PATH)
-    with ZipFile(Path(PATH_ROOT, 'zip_folder.zip')) as zf:
+    with ZipFile(Path(PATH_ROOT, '../src/files/zip_folder.zip')) as zf:
         assert zf.namelist() == [FILE_NAME, 'other_file.txt']
     shutil.rmtree(DOWNLOAD_PATH)
 
