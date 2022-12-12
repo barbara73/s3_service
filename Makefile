@@ -38,7 +38,7 @@ setup-git:
 		git config --local commit.gpgsign true; \
 		git config --local user.signingkey ${GPG_KEY_ID}; \
 	fi
-	@poetry run pre-commit install
+
 
 test:
 	@poetry run pytest && readme-cov
