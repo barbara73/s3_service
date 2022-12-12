@@ -12,7 +12,6 @@ from pathlib import Path
 from typing import Any
 
 from boto3 import resource
-from logdecoratorandhandler.log_decorator import LogDecorator
 
 
 @dataclass
@@ -24,7 +23,6 @@ class S3Storage:
     bucket_name: str
     in_memory_file: Any = field(default=None)
 
-    @LogDecorator('INFO - upload single file to bucket')
     def upload_single_file(self, f_name: str, f_path: str = None) -> None:
         """
         Upload a single file to bucket:
@@ -43,7 +41,6 @@ class S3Storage:
             bkt = self.s3.Bucket(self.bucket_name)
             bkt.put_object(Body=self.in_memory_file, Key=f_name)
 
-    @LogDecorator('INFO - upload files from folder to bucket')
     def upload_from_folder(self, f_path: str) -> None:
         """
         Upload all files from folder to bucket.
@@ -51,7 +48,6 @@ class S3Storage:
         for file in get_file_names(f_path):
             self.upload_single_file(file, f_path)
 
-    @LogDecorator('INFO - upload files from folder to bucket')
     def upload_zip(self, zip_file: str) -> None:
         """
         Upload all files from folder to bucket.
@@ -60,8 +56,6 @@ class S3Storage:
                              key=zip_file)
         obj.upload_file(Filename=zip_file)
 
-
-@LogDecorator('INFO - get log infos as list')
 def get_file_names(file_path):
     """Get file names of directory."""
     return [f for f in listdir(file_path) if isfile(join(file_path, f))]

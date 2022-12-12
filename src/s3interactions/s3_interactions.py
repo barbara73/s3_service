@@ -13,10 +13,8 @@ Most often used interactions with S3
 import uuid
 from boto3 import resource
 from boto3.session import Session
-from logdecoratorandhandler.log_decorator import LogDecorator
 
 
-@LogDecorator('INFO - create bucket name')
 def create_bucket_name(bucket_prefix='bkt-dfl-app-', bucket_suffix=None) -> str:
     """
     The generated bucket name must be between 3 and 63 chars long.
@@ -27,7 +25,6 @@ def create_bucket_name(bucket_prefix='bkt-dfl-app-', bucket_suffix=None) -> str:
     return f'{bucket_prefix}{bucket_suffix}'
 
 
-@LogDecorator('INFO - create new bucket')
 def create_new_bucket(s3: resource, bucket_name: str) -> Session:
     """
     Create bucket with session.
@@ -40,7 +37,6 @@ def create_new_bucket(s3: resource, bucket_name: str) -> Session:
                             )
 
 
-@LogDecorator('INFO - list objects')
 def list_bucket_objects(s3: resource, bucket_name: str) -> list:
     """
     List all objects in bucket.
@@ -53,7 +49,6 @@ def list_bucket_objects(s3: resource, bucket_name: str) -> list:
     return object_list
 
 
-@LogDecorator('INFO - list buckets')
 def list_buckets(s3: resource) -> list:
     """
     List all the buckets of user.
@@ -65,7 +60,6 @@ def list_buckets(s3: resource) -> list:
     return bucket_list
 
 
-@LogDecorator('INFO - delete objects in bucket')
 def delete_bucket_objects(s3: resource, bucket_name: str) -> None:
     """
     Delete all objects in bucket.
@@ -76,7 +70,6 @@ def delete_bucket_objects(s3: resource, bucket_name: str) -> None:
     bkt.delete_objects(Delete={'Objects': objects_list})
 
 
-@LogDecorator('INFO - delete objects and bucket')
 def delete_all(s3: resource, bucket_name: str) -> None:
     """
     Delete all files and bucket.
@@ -96,7 +89,6 @@ def delete_all(s3: resource, bucket_name: str) -> None:
     bkt.delete()
 
 
-@LogDecorator('INFO - delete objects and bucket')
 def delete_all_versions(s3: resource, bucket_name: str) -> None:
     """
     Delete all files and bucket.
@@ -117,7 +109,6 @@ def delete_all_versions(s3: resource, bucket_name: str) -> None:
     bkt.delete()
 
 
-@LogDecorator('INFO - copy objects to other bucket')
 def copying_between_buckets(s3, source, target):
     """
     For renaming a bucket, you have to copy all files to the new one and

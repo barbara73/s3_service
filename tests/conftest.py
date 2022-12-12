@@ -3,7 +3,7 @@ import pytest
 from boto3 import resource
 from moto.s3 import mock_s3
 
-sys.path.append("../src/")
+sys.path.append("../src")
 
 
 BUCKET_NAME = 'MY_BUCKET_NAME'
@@ -25,4 +25,4 @@ def empty_bucket():
 
 
 if __name__ == '__main__':
-    print(FILE_PATH)
+    print(sys.path)

@@ -7,6 +7,7 @@ S3Downloader
 - get file into memory
 
 """
+import sys
 from dataclasses import dataclass
 from io import BufferedReader, BytesIO
 from os import mkdir, path
@@ -14,10 +15,9 @@ from pathlib import Path
 from zipfile import ZipFile
 from boto3 import resource
 from botocore.exceptions import ClientError
-from logdecoratorandhandler.log_decorator import LogDecorator
-from logdecoratorandhandler.log_handler import EXPORT_ID
 
 
+# TODO add here the root and sys.path add root to conftest?
 @dataclass
 class S3Downloader:
     """
@@ -25,8 +25,8 @@ class S3Downloader:
     """
     s3: resource
     bucket_name: str
+    export_id: str = field(default=None)
 
-    @LogDecorator('INFO - download all files from bucket')
     def download_all_files(self, f_path: str = 's3_downloads') -> None:
         """
         Download all files from bucket.
@@ -34,7 +34,6 @@ class S3Downloader:
         for obj in self.s3.Bucket(self.bucket_name).objects.all():
             self.download_single_file(obj.key, f_path)
 
-    @LogDecorator('INFO - download single file from bucket')
     def download_single_file(self, f_name: str, f_path: str = 'files/s3_downloads') -> None:
         """
         Download single file.
@@ -45,7 +44,6 @@ class S3Downloader:
         self.s3.Object(self.bucket_name,
                        f_name).download_file(str(Path(f_path, f_name)))
 
-    @LogDecorator('INFO - download files to zip')
     def download_all_files_as_zip(self, f_path: str = 'files/s3_downloads') -> None:
         """
         Download files to zip. Is much faster than
@@ -54,7 +52,7 @@ class S3Downloader:
             mkdir(Path(f_path))
 
         try:
-            with ZipFile(f'{f_path}/{self.bucket_name}_{EXPORT_ID}.zip', 'w') as zf:
+            with ZipFile(f'{f_path}/{self.bucket_name}_{export_id}.zip', 'w') as zf:
                 for obj in self.s3.Bucket(self.bucket_name).objects.all():
                     response = obj.get()
                     zf.writestr(obj.key, response['Body'].read())
@@ -62,7 +60,6 @@ class S3Downloader:
             raise ClientError(f'Cannot download file {obj.key}!') from ex
         zf.close()
 
-    @LogDecorator('INFO - download object from bucket in memory')
     def get_file_in_memory(self, f_name: str) -> BytesIO:
         """
         Download file in memory for manipulation before saving somewhere.
@@ -73,3 +70,7 @@ class S3Downloader:
         fid_ = BufferedReader(response['Body']._raw_stream)
         read_in_memory = fid_.read()
         return BytesIO(read_in_memory)
+
+
+if __name__ == '__main__':
+    print(sys.path)
