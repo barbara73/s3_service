@@ -8,7 +8,7 @@ S3Downloader
 
 """
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from io import BufferedReader, BytesIO
 from os import mkdir, path
 from pathlib import Path
@@ -27,14 +27,14 @@ class S3Downloader:
     bucket_name: str
     export_id: str = field(default=None)
 
-    def download_all_files(self, f_path: str = 's3_downloads') -> None:
+    def download_all_files(self, f_path: str) -> None:
         """
         Download all files from bucket.
         """
         for obj in self.s3.Bucket(self.bucket_name).objects.all():
             self.download_single_file(obj.key, f_path)
 
-    def download_single_file(self, f_name: str, f_path: str = 'files/s3_downloads') -> None:
+    def download_single_file(self, f_name: str, f_path: str = '../files/s3_downloads') -> None:
         """
         Download single file.
         """
@@ -52,7 +52,7 @@ class S3Downloader:
             mkdir(Path(f_path))
 
         try:
-            with ZipFile(f'{f_path}/{self.bucket_name}_{export_id}.zip', 'w') as zf:
+            with ZipFile(f'{f_path}/{self.bucket_name}_{self.export_id}.zip', 'w') as zf:
                 for obj in self.s3.Bucket(self.bucket_name).objects.all():
                     response = obj.get()
                     zf.writestr(obj.key, response['Body'].read())

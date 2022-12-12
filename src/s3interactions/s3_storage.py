@@ -56,6 +56,7 @@ class S3Storage:
                              key=zip_file)
         obj.upload_file(Filename=zip_file)
 
+
 def get_file_names(file_path):
     """Get file names of directory."""
     return [f for f in listdir(file_path) if isfile(join(file_path, f))]

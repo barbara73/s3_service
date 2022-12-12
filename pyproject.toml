@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "s3interactions"
-version = "0.1.5"
+version = "0.2.0"
 description = "Some most important interactions with S3 AWS"
 authors = ["barbara73 <barbara.jesacher@gmail.com>"]
 license = "MIT"
@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.9"
 pytest = "^7.1.2"
-boto3 = "^1.24.14"
+boto3 = "^1.24.15"
 moto = "^3.1.14"
 pandas = "^1.4.2"
 pydicom = "^2.3.0"
@@ -18,3 +18,7 @@ pydicom = "^2.3.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[virtualenvs]
+create = true
+in-project = true

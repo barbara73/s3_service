@@ -4,4 +4,3 @@ moto~=3.1.14
 pandas
 pydicom
 botocore~=1.27.15
-cryptography~=37.0.3

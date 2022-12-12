@@ -8,8 +8,8 @@ sys.path.append("../src")
 
 BUCKET_NAME = 'MY_BUCKET_NAME'
 FILE_NAME = 'file_name.csv'
-FILE_PATH = 'files/s3_storage'
-DOWNLOAD_PATH = 'files/s3_downloads'
+FILE_PATH = 'src/files/s3_storage'
+DOWNLOAD_PATH = 's3_downloads'
 
 
 @pytest.fixture
